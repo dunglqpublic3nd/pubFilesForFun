@@ -3,15 +3,42 @@
     <title>
       JSON_Composer
     </title>
-    
+    <style>
+      #composer{
+        display:block;
+        margin: 10px auto;
+        width: 95%;
+        height: 350px;
+        box-sizing: border-box;
+        font-size: 16px;
+        line-height: 18px;
+        padding: 5px;
+      }
+
+      .hidden{
+        display: none;
+      }
+    </style>
   </head>
   <body>
-    <h1> hello Git hub page</h1>
-    <p>Let write your new Japanese word list</p>
-    <textarea>
-      
-    </textarea>
-    <button>Save the json file</button>
+    <h3>Let compose your new Japanese word list</h3>
+    <ul>
+      <li>Alt + 1: focus textarea</li>
+      <li>Alt + 2: insert underscore "_"</li>
+      <li>Alt + 3: insert opening curly brace "{"</li>
+      <li>Alt + 4: insert closing curly brace "}"</li>
+      <li>Alt + 5: insert comma ","</li>
+      <li>Alt + 6: insert semicolon ";"</li>
+      <li>Alt + 7: insert colon ":"</li>
+    </ul>
+    <a href="./practice.html">Practice!!!</a>
+
+    <button id="btnTextToJSON">To JSON</button>
+    <button id="btnSaveJSON">Save the json file</button>
+    <textarea id="composer" value=""></textarea>
+    <a class="hidden" id="contentDownloader">link</a>
     <script src="./index.js"></script>
+    <script src="./TextToJson.js"></script>
+    
   </body>
 </html>
