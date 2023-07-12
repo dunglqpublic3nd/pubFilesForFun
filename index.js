@@ -72,6 +72,8 @@ function insertValue(value) {
             + value
             + textData.slice(index);
         composerMakeChange(composer.value);
+        // composer.selectionStart = index+value.length;
+        composer.selectionEnd = index+value.length;
     }
 }
 
