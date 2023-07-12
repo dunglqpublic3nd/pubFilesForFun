@@ -20,14 +20,14 @@ class ComposerHistory {
         this._index = -1;
     }
 
-    registerChange(value) {
+    registerChange(value, caretPosition) {
         if (this._isUndo) {
             this.setUndoFalse();
             this._history.splice(this._index + 1);
-            this._history.push(value);
+            this._history.push({ value, pos: caretPosition });
             this._index += 1;
         } else {
-            this._history.push(value);
+            this._history.push({ value, pos: caretPosition });
             this._index = this._history.length - 1;
         }
     }
@@ -57,7 +57,7 @@ class ComposerHistory {
 }
 
 const composerHistory = new ComposerHistory();
-composerHistory.registerChange(composer.value);
+composerHistory.registerChange(composer.value, composer.selectionEnd);
 
 composer.addEventListener("input", function valueChanged(ev) {
     composerMakeChange(ev.target.value)
@@ -66,14 +66,17 @@ composer.addEventListener("input", function valueChanged(ev) {
 function insertValue(value) {
     let index;
     if (composer === document.activeElement) {
-        console.log(index = composer?.selectionStart)
+        index = composer?.selectionStart
+        // console.log()
         let textData = composer.value;
         composer.value = textData.slice(0, index)
             + value
             + textData.slice(index);
-        composerMakeChange(composer.value);
         // composer.selectionStart = index+value.length;
+        // composer.selectionEnd = index;
         composer.selectionEnd = index+value.length;
+        composerMakeChange(composer.value);
+
     }
 }
 
@@ -81,7 +84,7 @@ function insertComma() {
     insertValue(",");
 }
 
-function insertNewDefintion(){
+function insertNewDefintion() {
     insertValue("<kanji>:<pronunciations>_{<words>;}");
 }
 
@@ -97,27 +100,33 @@ function insertClosingCurlyBracket() {
     insertValue("}");
 }
 
-function insertSemicolon(){
+function insertSemicolon() {
     insertValue(";");
 }
 
-function insertColon(){
+function insertColon() {
     insertValue(":");
 }
 
 function composerMakeRedo() {
-    composer.value = composerHistory.redo();
+    let detail = composerHistory.redo();
+    // console.log(detail)
+    composer.value = detail.value;
+    composer.selectionEnd = detail.pos;
     composerHistory.log();
 }
 
 function composerMakeChange(value) {
-    composerHistory.registerChange(value)
+    composerHistory.registerChange(value, composer.selectionEnd)
     composerHistory.log();
 
 }
 
 function composerMakeUndo() {
-    composer.value = composerHistory.undo();
+    let detail = composerHistory.undo();
+    // console.log(detail)
+    composer.value = detail.value;
+    composer.selectionEnd = detail.pos;
     composerHistory.log();
 
 }
@@ -129,18 +138,18 @@ window.addEventListener("keydown", function (ev) {
         insertNewDefintion();
         return;
     }
-    
-    if (key==="7" && alt){
+
+    if (key === "7" && alt) {
         insertComma();
         return
     }
 
-    if (key==="8" && alt){
+    if (key === "8" && alt) {
         insertSemicolon();
         return;
     }
-    
-    if (key === "9" && alt){
+
+    if (key === "9" && alt) {
         insertUnderScore();
         return
     }
@@ -165,7 +174,7 @@ window.addEventListener("keydown", function (ev) {
         return;
     }
 
-    if (key === "h" && alt){
+    if (key === "h" && alt) {
         help?.togglePopover();
         return;
     }
@@ -174,14 +183,14 @@ composer.addEventListener("keydown", function (ev) {
     let { key, ctrlKey: ctrl } = ev;
     if (key === "z" && ctrl) {
         // undo block  
-        console.log("composer", key, ctrl)
+        // console.log("composer", key, ctrl)
         ev.preventDefault();
         composerMakeUndo();
         return;
     }
     if (key === "y" && ctrl) {
         // redo block
-        console.log("composer", key, ctrl)
+        // console.log("composer", key, ctrl)
 
         ev.preventDefault();
         composerMakeRedo();
