@@ -1,44 +1,79 @@
 <html>
-  <head>
-    <title>
-      JSON_Composer
-    </title>
-    <style>
-      #composer{
-        display:block;
-        margin: 10px auto;
-        width: 95%;
-        height: 350px;
-        box-sizing: border-box;
-        font-size: 16px;
-        line-height: 18px;
-        padding: 5px;
-      }
 
-      .hidden{
-        display: none;
-      }
-    </style>
-  </head>
-  <body>
-    <h3>Let compose your new Japanese word list</h3>
-    <ul>
-      <li>Alt + 1: focus textarea</li>
+<head>
+  <title>
+    JSON_Composer
+  </title>
+  <style>
+    #composer {
+      display: block;
+      margin: 10px auto;
+      width: 95%;
+      height: 350px;
+      box-sizing: border-box;
+      font-size: 16px;
+      line-height: 28px;
+      padding: 5px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h3>Let's compose your new Japanese word list</h3>
+  <p>Type <br/> Alt + m for toggling available command list <br /> Alt + h for help!</p>
+
+  <table id="menu" popover>
+
+    <tr>
+      <td>Focus textarea</td>
+      <td><code>Alt + 1</code></td>
+    </tr>
+    <tr>
+      <td>Insert new kanji defintion</td>
+      <td><code>Alt + 2</code></td>
+    </tr>
+    <tr>
+      <td>Insert comma ","</td>
+      <td><code>Alt + 7 </code></td>
+    </tr>
+    <tr>
+      <td>Insert semicolon ";"</td>
+      <td><code>Alt + 8 </code></td>
+    </tr>
+    <tr>
+      <td>Insert underscore "_"</td>
+      <td><code>Alt + 9 </code></td>
+    </tr>
+    <!-- <li>Alt + 5: insert comma ","</li>
+      <li>Alt + 6: insert semicolon ";"</li>
       <li>Alt + 2: insert underscore "_"</li>
+      
       <li>Alt + 3: insert opening curly brace "{"</li>
       <li>Alt + 4: insert closing curly brace "}"</li>
-      <li>Alt + 5: insert comma ","</li>
-      <li>Alt + 6: insert semicolon ";"</li>
-      <li>Alt + 7: insert colon ":"</li>
-    </ul>
-    <a href="./practice.html">Practice!!!</a>
+      <li>Alt + 7: insert colon ":"</li> -->
 
-    <button id="btnTextToJSON">To JSON</button>
-    <button id="btnSaveJSON">Save the json file</button>
-    <textarea id="composer" value=""></textarea>
-    <a class="hidden" id="contentDownloader">link</a>
-    <script src="./index.js"></script>
-    <script src="./TextToJson.js"></script>
-    
-  </body>
+  </table>
+  <div id="help" popover>
+    <pre>
+&lt;kanji&gt;:&lt;pronunciations&gt;_{&lt;words&gt;;}
+  Example:    
+  右:ウ,ユウ,みぎ_{右派_ウハ_rightist faction; 左右_サユウ_control; 右手_みぎて_right hand}
+    </pre>
+ 
+  </div>
+  <a href="./practice.html">Practice!!!</a>
+  <input id="txtFileName" type="text" placeholder="Enter file name" />
+  <button id="btnTextToJSON">To JSON</button>
+  <button id="btnSaveJSON">Save the json file</button>
+  <textarea id="composer" value=""></textarea>
+  <a class="hidden" id="contentDownloader">link</a>
+  <script src="./index.js"></script>
+  <script src="./TextToJson.js"></script>
+
+</body>
+
 </html>

@@ -79,6 +79,10 @@ function insertComma() {
     insertValue(",");
 }
 
+function insertNewDefintion(){
+    insertValue("<kanji>:<pronunciations>_{<words>;}");
+}
+
 function insertOpeningCurlyBracket() {
     insertValue("{");
 }
@@ -119,34 +123,48 @@ function composerMakeUndo() {
 window.addEventListener("keydown", function (ev) {
     // let key = ev.key, alt = ev.altKey;
     let { key, altKey: alt, ctrlKey: ctrl } = ev;
-    if (key === "5" && alt) {
-        insertComma();
+    if (key === "2" && alt) {
+        insertNewDefintion();
         return;
     }
     
     if (key==="7" && alt){
-        insertColon();
+        insertComma();
+        return
     }
 
-    if (key==="6" && alt){
+    if (key==="8" && alt){
         insertSemicolon();
         return;
     }
     
-    if (key === "2" && alt){
+    if (key === "9" && alt){
         insertUnderScore();
+        return
     }
 
-    if (key === "3" && alt){
-        insertOpeningCurlyBracket();
-    }
+    // if (key === "3" && alt){
+    //     insertOpeningCurlyBracket();
+    //     return;
+    // }
 
-    if (key === "4" && alt){
-        insertClosingCurlyBracket();
-    }
+    // if (key === "4" && alt){
+    //     insertClosingCurlyBracket();
+    //     return;
+    // }
 
     if (key === "1" && alt) {
         composer.focus();
+        return;
+    }
+
+    if (key === "m" && alt) {
+        menu?.togglePopover();
+        return;
+    }
+
+    if (key === "h" && alt){
+        help?.togglePopover();
         return;
     }
 });

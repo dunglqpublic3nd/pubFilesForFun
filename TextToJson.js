@@ -20,7 +20,6 @@ function textToJSON() {
 function encodingJson(obj) {
     let data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj, null, "  "));
     contentDownloader.setAttribute("href", data);
-    contentDownloader.setAttribute("download", "kanji.json");
 }
 
 btnTextToJSON.addEventListener("click", textToJSON)
@@ -125,4 +124,8 @@ window.addEventListener("keydown", function (ev) {
         downloadKanjiJSONFile();
         return;
     }
+})
+
+txtFileName.addEventListener("change", function(ev){
+    contentDownloader.setAttribute("download", `${ev.target.value}.json`);
 })
