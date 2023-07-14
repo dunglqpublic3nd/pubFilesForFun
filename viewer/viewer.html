@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .kanjiList {
+                margin: 10px 20px;
+                background-color: whitesmoke;
+                padding: 10px;
+            }
+
+            .listName {
+                background-color: yellow;
+                padding:3px;
+            }
+
+            .kanjiBlock{
+                border: 1px solid gray;
+                margin: 5px 0;
+                padding: 5px;
+
+                display: flex;
+            }
+
+            .leftBlock{
+                /* float: left; */
+                margin-right: 10px;
+            }
+            .rightBlock{
+                /* float: left; */
+                width: 100%;
+            }
+            .clearBlock{
+                clear:both;
+            }
+
+            .wordBlock{
+                border-bottom: 1px dashed grey;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <div id="tooblar">
+            <input type="file" multiple="true" id="FileOpener"/>
+            // toolbar   
+            </div>
+            <div id="content">
+
+            </div>
+        </div>
+        <script src="./viewer.js"></script>
+    </body>
+</html>

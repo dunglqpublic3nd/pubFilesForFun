@@ -66,7 +66,7 @@ class WordDefinition {
     constructor() {
         this.symbol = "";
         this.pronounciations = [];
-        this.defintions = [];
+        this.definitions = [];
     }
 
     setSymbol(symbol) {
@@ -78,7 +78,7 @@ class WordDefinition {
     }
 
     setDefinitions(defintions) {
-        this.defintions = defintions;
+        this.definitions = defintions;
     }
 }
 
