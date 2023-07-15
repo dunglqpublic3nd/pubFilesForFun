@@ -1,0 +1,134 @@
+<html>
+
+<head>
+  <title>
+    JSON_Composer
+  </title>
+  <style>
+    #composer {
+      display: block;
+      margin: 10px auto;
+      width: 95%;
+      height: 350px;
+      box-sizing: border-box;
+      font-size: 16px;
+      line-height: 28px;
+      padding: 5px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .kanjiBlock{
+      display: flex;
+      padding: 20px;
+      background-color: whitesmoke;
+    }
+
+    .kanjiBox{
+      display: block;
+      margin-bottom: 5px;
+
+    }
+
+    .pronounBox, .pronunBox, .meaningBox, .symbolBox{
+      font-size: 20px;
+      padding: 5px;
+    }
+
+    .kanjiBox{
+      font-size: 60px;
+      padding: 5px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .pronounBox {
+      display:block;
+      margin-bottom: 5px;
+      width: 100%;
+    }
+    .leftBlock{
+      margin-right: 15px;
+      width: 30%;
+      /* border: 1px solid brown; */
+    }
+
+    .rightBlock{
+      padding: 10px;
+    }
+
+    .symbolBox{
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    .pronunBox{
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    .meaningBox{
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    #btnAddKanji {
+      float:right;
+    }
+
+    #list{
+      margin: 20px 0;
+    }
+
+    .bgr_red-text_white{
+      color:white;
+      background-color: red;
+    }
+
+    .bgr_green-text_white{
+      color:white;
+      background-color: green;
+    }
+
+  </style>
+</head>
+
+<body>
+  <h3>Let's compose your new Japanese word list</h3>
+  <button id="btnCommandList">Command list</button>
+  <button id="btnHelp" >Help</button>
+
+  <div id="list">
+
+  </div>
+
+  <div>
+    <input id="txtFileName" type="text" placeholder="Enter file name" />
+    <button id="btnTextToJSON">To JSON</button>
+    <button id="btnSaveJSON">Save the json file</button>
+    
+    <button id="btnAddKanji" class="bgr_green-text_white" >Add kanji</button>
+  </div>
+  <table id="menu" popover>
+
+
+    <tr>
+      <td>Insert comma ","</td>
+      <td><code>Alt + 7 </code></td>
+    </tr>
+
+
+    
+  </table>
+  <div id="help" popover>
+    Hit Alt + 7 to insert comma ","
+  </div>
+
+  <a class="hidden" id="contentDownloader">link</a>
+  <script src="./index.js"></script>
+
+</body>
+
+</html>
