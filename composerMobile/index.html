@@ -61,17 +61,19 @@
 
     .symbolBox{
       margin-right: 10px;
-      margin-bottom: 10px;
     }
 
     .pronunBox{
       margin-right: 10px;
-      margin-bottom: 10px;
     }
 
     .meaningBox{
       margin-right: 10px;
-      margin-bottom: 10px;
+    }
+
+    .wordBlock{
+      padding: 5px;
+      margin: 5px;
     }
 
     #btnAddKanji {
@@ -92,6 +94,43 @@
       background-color: green;
     }
 
+    .border_red{
+      border: 1px solid red;
+    }
+
+    button{
+      font-size: 1.2em;
+    }
+
+    .wordBlock button {
+      margin-top: 5px;
+    }
+
+    .btnAddWord{
+      float: right;
+      margin-right: 10px;
+    }
+
+    .controlBar{
+      position: fixed;
+      bottom:0;
+      left: 0;
+      right: 0;
+      width: calc(100%-20);
+      margin: 10px;
+      background-color: white;
+      height: 20px;
+      padding: 20px;
+    }
+
+    .controlBar input{
+      font-size: 1.2em;
+    }
+
+    #list{
+      margin-bottom: 140px;
+    }
+
   </style>
 </head>
 
@@ -99,28 +138,30 @@
   <h3>Let's compose your new Japanese word list</h3>
   <button id="btnCommandList">Command list</button>
   <button id="btnHelp" >Help</button>
-
+  <form id="wev" class="hidden">
+    <input type="file" id="uploader" multiple="true"/>
+  </form>
+  <button id="btnOpen">Open</button>
   <div id="list">
 
   </div>
 
-  <div>
+  <div class="controlBar">
     <input id="txtFileName" type="text" placeholder="Enter file name" />
     <button id="btnTextToJSON">To JSON</button>
     <button id="btnSaveJSON">Save the json file</button>
     
+    <button id="btnPrevious">Previous Input</button>
+    
+    <button id="btnNext">Next Input</button>
+    
     <button id="btnAddKanji" class="bgr_green-text_white" >Add kanji</button>
   </div>
   <table id="menu" popover>
-
-
     <tr>
       <td>Insert comma ","</td>
       <td><code>Alt + 7 </code></td>
     </tr>
-
-
-    
   </table>
   <div id="help" popover>
     Hit Alt + 7 to insert comma ","
@@ -130,5 +171,4 @@
   <script src="./index.js"></script>
 
 </body>
-
 </html>
