@@ -316,9 +316,11 @@ btnForceReload.onclick = () => {
                 for (let registration of registrations) {
                     registration.unregister()
                 }
+            }).then(()=>{
+                document.location.reload(true)
             })
     }
-    document.location.reload(true)
+   
 }
 
 // alert(navigator.userAgent); console.log(navigator.userAgentData)
