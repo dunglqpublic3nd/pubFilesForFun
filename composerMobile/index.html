@@ -1,6 +1,7 @@
 <html>
 
 <head>
+  <link rel="manifes" href="manifest.json"/>
   <title>
     JSON_Composer
   </title>
@@ -169,6 +170,10 @@
 
   <a class="hidden" id="contentDownloader">link</a>
   <script src="./index.js"></script>
-
+  <script>
+    if('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js', { scope: '/' });
+    }
+  </script>
 </body>
 </html>

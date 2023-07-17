@@ -1,0 +1,17 @@
+{
+    "lang": "en-us",
+    "name": "Japnese Json composer",
+    "short_name": "Japnese Json composer",
+    "description": "Japnese Json composer",
+    "start_url": "/",
+    "background_color": "#2f3d58",
+    "theme_color": "#2f3d58",
+    "orientation": "any",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "icons/icon512.png",
+            "sizes": "512x512"
+        }
+    ]
+}
