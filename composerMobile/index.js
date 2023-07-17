@@ -307,3 +307,7 @@ btnNext.onclick = () => {
     context.index+=1;
     focusInput(context)
 }
+
+btnForceReload.onclick = ()=>{
+    document.location.reload(true)
+}

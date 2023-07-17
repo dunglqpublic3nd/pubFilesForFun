@@ -3,7 +3,7 @@
 <head>
   <link rel="manifest" href="manifest.webmanifest"/>
   <title>
-    Mobile Composer v1.0.2
+    v1.0.3 Mobile Composer 
   </title>
   <style>
     #composer {
@@ -122,8 +122,31 @@
       background-color: white;
       height: 20px;
       padding: 20px;
-      margin-bottom: 20px;
+    
     }
+
+    #btnForceReload{
+      display: none;
+    }
+
+    @media screen and (max-width: 992px) {
+      #btnForceReload{
+      display: inline;
+    }
+    .controlBar{
+      margin-bottom: 50px;
+    }
+}
+
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 600px) {
+  #btnForceReload{
+      display: inline;
+    }
+    .controlBar{
+      margin-bottom: 50px;
+    }
+}
 
     .controlBar input{
       font-size: 1.2em;
@@ -138,6 +161,7 @@
 
 <body>
   <h3>Let's compose your new Japanese word list</h3>
+  <button id="btnForceReload"> Force reload content </button>
   <button id="btnCommandList">Command list</button>
   <button id="btnHelp" >Help</button>
   <form id="wev" class="hidden">
