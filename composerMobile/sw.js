@@ -1,4 +1,4 @@
-const version = "1.0.5";
+const version = "1.0.6.1";
 const CACHE_NAME = `Japanese_mobile_composer_${version}`;
 
 // Use the install event to pre-cache all initial resources.
@@ -6,8 +6,8 @@ self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
     cache.addAll([
-      './',
-      './index.js',
+      `./?v=${version}`,
+      `./index.js?v=${version}`,
     //   '/converter.css'
     ]);
   })());
