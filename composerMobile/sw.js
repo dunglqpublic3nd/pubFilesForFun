@@ -1,4 +1,5 @@
-const CACHE_NAME = `Japanese_mobile_composer`;
+const version = "1.0.4";
+const CACHE_NAME = `Japanese_mobile_composer_${version}`;
 
 // Use the install event to pre-cache all initial resources.
 self.addEventListener('install', event => {
