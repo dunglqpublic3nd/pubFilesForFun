@@ -318,7 +318,7 @@ btnForceReload.onclick = () => {
                 }
             })
     }
-    // document.location.reload(true)
+    document.location.reload(true)
 }
 
 alert(navigator.userAgent)
