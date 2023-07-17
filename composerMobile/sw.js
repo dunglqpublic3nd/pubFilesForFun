@@ -5,8 +5,8 @@ self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
     cache.addAll([
-      '/',
-      '/index.js',
+      './',
+      './index.js',
     //   '/converter.css'
     ]);
   })());
