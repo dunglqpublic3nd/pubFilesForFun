@@ -312,4 +312,4 @@ btnForceReload.onclick = ()=>{
     document.location.reload(true)
 }
 
-alert (document.body.clientWidth)
+alert (navigator.userAgent)
