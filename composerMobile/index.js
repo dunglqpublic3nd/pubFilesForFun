@@ -321,4 +321,4 @@ btnForceReload.onclick = () => {
     document.location.reload(true)
 }
 
-alert(navigator.userAgent)
+// alert(navigator.userAgent); console.log(navigator.userAgentData)
