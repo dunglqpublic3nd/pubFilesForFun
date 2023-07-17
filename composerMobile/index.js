@@ -284,12 +284,12 @@ function findSelectedInput() {
 
 let LastKnowInput = null;
 
-function focusInput(context){
+function focusInput(context) {
     if (context.inputs[context.index]) {
-        setTimeout(()=>context.inputs[context.index].focus(),20);
-    }else{
+        setTimeout(() => context.inputs[context.index].focus(), 20);
+    } else {
         setTimeout(() => {
-            if(LastKnowInput){
+            if (LastKnowInput) {
                 LastKnowInput.focus()
             }
         }, 20);
@@ -298,27 +298,27 @@ function focusInput(context){
 
 btnPrevious.onclick = () => {
     let context = findSelectedInput();
-    context.index-=1;
+    context.index -= 1;
     focusInput(context)
 }
 
 btnNext.onclick = () => {
     let context = findSelectedInput();
-    context.index+=1;
+    context.index += 1;
     focusInput(context)
 }
 
-btnForceReload.onclick = ()=>{
+btnForceReload.onclick = () => {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+            .getRegistrations()
+            .then(function (registrations) {
+                for (let registration of registrations) {
+                    registration.unregister()
+                }
+            })
+    }
     // document.location.reload(true)
-        if ('serviceWorker' in navigator) {
-           navigator.serviceWorker
-           .getRegistrations()
-           .then(function (registrations) {
-              for (let registration of registrations) {
-                 registration.unregister()
-              }
-           })
-        }
 }
 
-alert (navigator.userAgent)
+alert(navigator.userAgent)
