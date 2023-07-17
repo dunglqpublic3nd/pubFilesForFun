@@ -311,3 +311,5 @@ btnNext.onclick = () => {
 btnForceReload.onclick = ()=>{
     document.location.reload(true)
 }
+
+alert (document.body.clientWidth)
