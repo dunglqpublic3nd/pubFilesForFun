@@ -8,6 +8,7 @@ function createDiv() {
 function createTextInput() {
     let textInput = document.createElement("input");
     textInput.setAttribute("type", "text");
+    textInput.setAttribute("autocomplete", "disabled");
     return textInput;
 }
 
