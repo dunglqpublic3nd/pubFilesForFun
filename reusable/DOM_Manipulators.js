@@ -14,6 +14,12 @@ function createTextBox(){
     return textBox;
 }
 
+function createButton(btnText){
+    let btn = document.createElement("button");
+    btn.innerText = btnText;
+    return btn;
+}
+
 function toggleClassName(element, nameArr, onOff) {
     if (!isObject(element)) return printInvalidHTMLElement(element);
     if (onOff === undefined) element.classList.toggle(...nameArr);

@@ -1,4 +1,4 @@
-sliding-menu.expand {
+div[is=sliding-menu].expand {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,7 +8,7 @@ sliding-menu.expand {
     padding:10px;
 }
 
-sliding-menu.expand>* {
+div[is=sliding-menu].expand>* {
     width: 100%;
     padding: 10px;
     display: block;
@@ -17,7 +17,7 @@ sliding-menu.expand>* {
     font-size: 17px;
 }
 
-sliding-menu.expand>menu-name {
+div[is=sliding-menu].expand>div[is=menu-name] {
     font-size: 30px;
     text-align: center;
     display: block;
@@ -27,15 +27,15 @@ sliding-menu.expand>menu-name {
     border-bottom:  3px solid gray;
 }
 
-sliding-menu.collapse {
+div[is=sliding-menu].collapse {
     width: 20px;
 }
 
-sliding-menu.collapse>* {
+div[is=sliding-menu].collapse>* {
     display: none;
 }
 
-sliding-menu.collapse>menu-name {
+div[is=sliding-menu].collapse>div[is=menu-name] {
     transform: rotate(90deg) translate(3px, 3px);
     font-size: 20px;
     padding: 5px;
@@ -45,14 +45,19 @@ sliding-menu.collapse>menu-name {
     white-space: nowrap;
 
 }
-sliding-menu,  menu-name, command-button{
+
+button[is=command-button]{
+    all: unset;
+}
+
+div[is=sliding-menu],  div[is=menu-name], button[is=command-button]{
     box-sizing: border-box;
 }
-sliding-menu{
+div[is=sliding-menu]{
     display: block;
 }
 
-menu-name{
+div[is=menu-name]{
     display: block;
 }
 

@@ -1,7 +1,8 @@
-class SlidingMenu extends HTMLElement {
+class SlidingMenu extends HTMLDivElement {
     constructor() {
         super();
         this.btnMenuName =this.createBtnMenu();
+        this.comChanel = undefined;
     }
 
     static get observedAttributes() {
@@ -56,15 +57,15 @@ class SlidingMenu extends HTMLElement {
     }
 
     createMenuNameButton() {
-        let menuNameButton = document.createElement("menu-name");
+        let menuNameButton = document.createElement("div",{is: "menu-name"});
+        setElementAttribute(menuNameButton, {is:"menu-name"})
         menuNameButton.innerText = this.getAttribute("name") ?? "|||";
 
         this.prepend(menuNameButton)
         return menuNameButton
     }
 }
-// customElements.define("sliding-menu", SlidingMenu, { extends: "div" });
-customElements.define("sliding-menu", SlidingMenu);
+customElements.define("sliding-menu", SlidingMenu, { extends: "div" });
 
 class MenuName extends HTMLDivElement {
     constructor() {
