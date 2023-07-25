@@ -1,0 +1,60 @@
+sliding-menu.expand {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: fit-content;
+    bottom:0;
+    background-color: #ededdf;
+    padding:10px;
+}
+
+sliding-menu.expand>* {
+    width: 100%;
+    padding: 10px;
+    display: block;
+    border-bottom: 1px solid gray;
+    text-transform: capitalize;
+    font-size: 17px;
+}
+
+sliding-menu.expand>menu-name {
+    font-size: 30px;
+    text-align: center;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+    border-bottom:  3px solid gray;
+}
+
+sliding-menu.collapse {
+    width: 20px;
+}
+
+sliding-menu.collapse>* {
+    display: none;
+}
+
+sliding-menu.collapse>menu-name {
+    transform: rotate(90deg) translate(-10px, 0px);
+    font-size: 20px;
+    padding: 5px;
+    display: inline-block;
+    border: 1px solid black;
+    border-radius: 5px 5px;
+    content: "|||"
+}
+sliding-menu,  menu-name, command-button{
+    box-sizing: border-box;
+}
+sliding-menu{
+    display: block;
+}
+
+menu-name{
+    display: block;
+}
+
+.hide{
+    display: none;
+}

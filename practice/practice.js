@@ -7,7 +7,8 @@ btnView.addEventListener("click",function(){
     btnView.dispatchEvent(new CustomEvent("eventX",{msg:"hello"}));
 },false)
 
-const controller = new Controller();
-const eventX = new Event("eventX")
-controller.addEventListener("eventX",controller.inform);
+
 // btnView.addEventListener("eventX",console.log);
+
+// customElements.define("sliding-menu", SlidingMenu, { extends: "div" });
+

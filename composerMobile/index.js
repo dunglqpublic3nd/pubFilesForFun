@@ -8,6 +8,11 @@ function createDiv() {
 function createTextInput() {
     let textInput = document.createElement("input");
     textInput.setAttribute("type", "text");
+    return textInput;
+}
+
+function createDisabledAutoCompleteTextInput(){
+    const textInput = createTextInput();
     textInput.setAttribute("autocomplete", "disabled");
     return textInput;
 }
@@ -320,7 +325,6 @@ btnForceReload.onclick = () => {
                 document.location.reload(true)
             })
     }
-   
 }
 
 // alert(navigator.userAgent); console.log(navigator.userAgentData)
