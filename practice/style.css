@@ -36,7 +36,7 @@ sliding-menu.collapse>* {
 }
 
 sliding-menu.collapse>menu-name {
-    transform: rotate(90deg) translate(20px, 50px);
+    transform: rotate(90deg) translate(3px, 3px);
     font-size: 20px;
     padding: 5px;
     display: inline-block;
