@@ -42,7 +42,8 @@ sliding-menu.collapse>menu-name {
     display: inline-block;
     border: 1px solid black;
     border-radius: 5px 5px;
-    content: "|||"
+    white-space: nowrap;
+
 }
 sliding-menu,  menu-name, command-button{
     box-sizing: border-box;

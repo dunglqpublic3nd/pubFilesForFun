@@ -1,7 +1,7 @@
 class SlidingMenu extends HTMLElement {
     constructor() {
         super();
-        this.btnMenuName = null;
+        this.btnMenuName =this.createBtnMenu();
     }
 
     static get observedAttributes() {
@@ -9,13 +9,14 @@ class SlidingMenu extends HTMLElement {
     }
 
     connectedCallback() {
-        this.btnMenuName = this.createMenuNameButton();
-        bindClick(this.btnMenuName, (function(){
-            console.log("before",this.getAttribute("isexpanded"), !(this.getAttribute("isexpanded")==="true"))
-            this.setAttribute("isexpanded",!(this.getAttribute("isexpanded")==="true"));
-            console.log("after",this.getAttribute("isexpanded"))
-        }).bind(this));
         console.log("reach connectedCallback");
+    }
+    createBtnMenu(){
+        let btnMenuName = this.createMenuNameButton();
+        bindClick(btnMenuName, (function(){
+            this.setAttribute("isexpanded",!(this.getAttribute("isexpanded")==="true"));
+        }).bind(this));
+        return btnMenuName
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -47,14 +48,16 @@ class SlidingMenu extends HTMLElement {
     }
 
     change_BtnMenuName(val){
-        if (this.btnMenuName){
+        if (this.btnMenuName && (this.getAttribute("isexpanded")==="true")){
             this.btnMenuName.innerText = val;
+        } else if (this.btnMenuName) {
+            this.btnMenuName.innerText = "|||";
         }
     }
 
     createMenuNameButton() {
         let menuNameButton = document.createElement("menu-name");
-        menuNameButton.innerText = this.getAttribute("name") ?? "Menu";
+        menuNameButton.innerText = this.getAttribute("name") ?? "|||";
 
         this.prepend(menuNameButton)
         return menuNameButton

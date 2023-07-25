@@ -1,4 +1,6 @@
-
+function hardReload(){
+    document.location.reload(true)
+}
 
 btnView.addEventListener("click",function(){
     // alert("do something")
