@@ -1,0 +1,42 @@
+Usecase and detail description
+
+    Local Storgate Visitor & Backup & Setting
+        Demands:
+            Because uploading to open file sometime is the pain in my ass.
+                -> gonna use localStorage for easier usage
+                
+                Some features may be benefit of this Local Storage Visitor and Backup.
+                    -> Kanji Tracker
+                    -> Tags
+                    -> Groups
+                    -> Setting
+
+        HINT:
+            new features
+                Practice Card data manager
+                    User is allowed to decide which Practice Cards are allowed to stay in Local Storage memory.
+
+                    alternative:
+                        Solutions
+                        1: in Practice Card Manager
+                            each loaded Practice Card should have an option to persist in localstorage checkbox depend on Setting
+                        2: Practice Card Take Away view
+                            a child view of Practice Card Manager
+                                allow user to check which Practice Cards persist in localStorage
+                                - if Setting's "Allow Take Away Practice Card" option avaialble then this child view is available on Function Menu
+    
+    Setting
+        Design 
+            Kanji Tracking Setting
+                option to track kanji
+            
+            Memory Setting
+                option to keep tag
+                option to keep groups
+                option to keep tags
+                option Allow Take Away Practice Card
+
+            Practice Setting
+                number of question per test
+
+                

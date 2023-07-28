@@ -1,9 +1,11 @@
-class WelcomeView extends View{
+import { View } from "../../reusable/Infrastructure/View.js";
+
+export class DashboardView extends View{
     constructor (){
         super();
-
     }
     render(){
+        this.defineView("dashboard-view");
         let bg = document.createElement("div");
         let message = document.createElement("h3");
         message.innerText ="Welcome";
@@ -12,4 +14,4 @@ class WelcomeView extends View{
     }
 }
 
-customElements.define("welcome-view", WelcomeView, {extends: "div"})
+customElements.define("dashboard-view", DashboardView, {extends: "div"})

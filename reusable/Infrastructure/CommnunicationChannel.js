@@ -1,4 +1,6 @@
-class CommunicationChannel{
+import { toArray } from "../DOM_Manipulators.js";
+
+export class CommunicationChannel{
     constructor(name){
         this.channelName = name;
         this.topics = new Map();

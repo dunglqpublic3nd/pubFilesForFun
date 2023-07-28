@@ -1,9 +1,9 @@
-class MainView extends View{
+class MasterView extends View{
     constructor(){
         super();
         this.viewCollections = new Map();
         this.activeViewName;
-        this.comChannel;
+        // this.comChannel;
     }
 
     setViewContent(viewElement){
@@ -14,9 +14,9 @@ class MainView extends View{
         }
     }
 
-    setCommunicationChannel(channel){
-        this.comChannel = channel;
-    }
+    // setCommunicationChannel(channel){
+    //     this.comChannel = channel;
+    // }
 
     showView(viewName, viewElement){
         let view;
@@ -38,10 +38,10 @@ class MainView extends View{
 
     addViewToCollection (viewName, view){
         this.viewCollections.set(viewName, view)
-        if(this.comChannel){
-            this.comChannel.deliver("UpdateActiveViews", {views: this.getViewNames()});
+        // if(this.comChannel){
+        //     this.comChannel.deliver("UpdateActiveViews", {views: this.getViewNames()});
 
-        }
+        // }
     }
 
     getView (viewName){
@@ -71,9 +71,9 @@ class MainView extends View{
 
     render(){
         setElementAttribute(this, {
-            is: "main-view"
+            is: "master-view"
         })
     }
 }
 
-customElements.define("main-view", MainView, {extends: "div"})
+customElements.define("master-view", MasterViewView, {extends: "div"})

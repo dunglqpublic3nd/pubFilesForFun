@@ -1,4 +1,6 @@
-class CommandButton extends HTMLButtonElement {
+import { setElementAttribute } from "../DOM_Manipulators.js";
+
+export class CommandButton extends HTMLButtonElement {
     constructor() {
         super();
     }

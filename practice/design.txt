@@ -1,0 +1,135 @@
+Functions
+    Practice1: Match Maker (Symbol - reading - meaning)
+    Practice2: Picking Reading (give symbol)
+    Practice3: Picking Symbol (give meaning)
+    Practice4: Picking Meaning (give symbol)
+    Practice5: Random Prt1, Prt2, Prt3, Prt4
+    Tag Manager
+    Tag Composer
+    Group Composer
+    Group Manager
+    Setting Provider
+    Backup 
+    Report Reader
+    Compose Kanji List
+    Convert Kanji List to Practice Card
+    Dashboard
+    ViewManager
+    Kanji Tracker
+    Update group tag (meta data of all Practice Card)
+    Practice Card Manager
+
+Component
+    Tag Provider
+    Group Provider
+    Setting Provider
+    Report Maker Service
+    Practice Provider
+    Report Provider
+    Local Storage Visitor
+    Kanji Service
+    Communication Channel
+    Word Service
+    Kanji Service
+    Open resource file
+    Resource handlers
+    Popup
+    Selection List
+    DropDown List
+
+
+
+Model Design
+    <Practice Card>
+        {
+            words: [<word>],
+            tags: [<tag>],
+            reports: [<report>],
+            groups: [<group>],
+            name:  text,
+            date: epoch_number
+        }
+    
+    <word>
+        {
+            symbol: text,
+            meanings: [text],
+            readings: [text],
+            tags: [number]
+        }
+    
+    <tag>
+        {
+            name: text,
+            id: number,
+            groups: [number]
+        }
+    
+    <group>
+        {
+            name: text,
+            id: number
+        }
+    
+    <report>
+        {
+            type: number,
+            date: epoch_number,
+            question: [<question_type1>|<question_type2>|<question_type3>|<question_type4>|<question_type5>],
+            summary:<summary>
+        }
+    
+    <question_type1>
+        {
+            userAnswer: [symbol_text, reading_text, meaning_text],
+            type: 1,
+            coorect: boolean,
+            answer: [symbol_text, reading_text, meaning_text]
+        }
+    
+    <question_type2>
+        {
+            type:2,
+            question: symbol_text,
+            correct: boolean,
+            answer: reading_text
+            userAnswer: reading_text
+        }
+
+    <question_type3>
+        {
+            type: 3,
+            correct: boolean,
+            question: meaning_text,
+            answer: symbol_text,
+            userAnswer: symbol_text
+        }
+
+    <question_type4>
+        {
+            type:4,
+            correct: boolean,
+            question: symbol_text,
+            answer: meaning_text,
+            userAnswer: meaning_text
+        }
+    
+    <question_type5>
+        // any of other question_type
+    
+    <summary>
+        {
+            total: number,
+            totalTime: second_number,
+            correct: number
+        }
+    
+    <kanjis>
+        [<kanji>]
+    
+    <kanji>
+        {
+            symbol: text,
+            meanings: [text],
+            readings: [text]
+        }

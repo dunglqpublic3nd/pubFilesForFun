@@ -1,4 +1,4 @@
-function createDiv() {
+export function createDiv() {
     return document.createElement("div");
 }
 
@@ -14,20 +14,20 @@ function createTextBox(){
     return textBox;
 }
 
-function createButton(btnText){
+export function createButton(btnText){
     let btn = document.createElement("button");
     btn.innerText = btnText;
     return btn;
 }
 
-function toggleClassName(element, nameArr, onOff) {
+export function toggleClassName(element, nameArr, onOff) {
     if (!isObject(element)) return printInvalidHTMLElement(element);
     if (onOff === undefined) element.classList.toggle(...nameArr);
     else if (onOff) element.classList.add(...nameArr);
     else element.classList.remove(...nameArr);
 }
 
-function setElementAttribute(element, attr) {
+export function setElementAttribute(element, attr) {
     if (!isHTMlElement(element)) return printInvalidHTMLElement(element)
     if (!isObject(attr)) return printError("Invalid argument, attr is not an object", attr);
     Object.entries(attr).forEach(entry => {
@@ -78,7 +78,7 @@ function printInvalidCheckBox(param) {
     printError("Invalid argument, obj is not a checkbox HTMLInputElement", ...param);
 }
 
-function removeAllChild(element) {
+export function removeAllChild(element) {
     if (!isHTMlElement(element)) return printInvalidHTMLElement(element);
     toArray(element.childNodes).forEach(
         node => {
@@ -87,11 +87,17 @@ function removeAllChild(element) {
     );
 }
 
-function toArray(collection) {
+export function prependChild(parentHTML, childHTML){
+    if (!isHTMlElement(parentHTML)) return printInvalidHTMLElement(parentHTML);
+    if (!isHTMlElement(childHTML)) return printInvalidHTMLElement(childHTML);
+    parentHTML.prepend(childHTML);
+}
+
+export function toArray(collection) {
     return Array.from(collection)
 }
 
-function appendChild(parentHTML, childHTML) {
+export function appendChild(parentHTML, childHTML) {
     if (!isHTMlElement(parentHTML)) return printInvalidHTMLElement(parentHTML);
     if (!isHTMlElement(childHTML)) return printInvalidHTMLElement(childHTML);
     parentHTML.appendChild(childHTML);
@@ -154,7 +160,11 @@ function isFocused(ele){
     return document.activeElement === ele;
 }
 
-function bindClick(ele, callback){
+export function bindClick(ele, callback){
     if (!isHTMlElement(ele)) return printInvalidHTMLElement(ele);
     ele.addEventListener("click",callback);
+}
+
+export function hardReload_WebPage(){
+    document.location.reload(true);
 }

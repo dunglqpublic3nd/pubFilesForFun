@@ -2,19 +2,20 @@ div[is=sliding-menu].expand {
     position: fixed;
     top: 0;
     left: 0;
-    min-width: fit-content;
+    min-width: 200px;
     bottom:0;
     background-color: #ededdf;
     padding:10px;
 }
 
-div[is=sliding-menu].expand>* {
+div[is=sliding-menu].expand *  {
     width: 100%;
     padding: 10px;
     display: block;
-    border-bottom: 1px solid gray;
+    /* border-bottom: 1px solid gray; */
     text-transform: capitalize;
     font-size: 17px;
+    box-sizing: border-box;
 }
 
 div[is=sliding-menu].expand>div[is=menu-name] {
@@ -59,6 +60,7 @@ div[is=sliding-menu]{
 
 div[is=menu-name]{
     display: block;
+    content: "menu";
 }
 
 .hide{

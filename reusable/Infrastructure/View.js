@@ -1,4 +1,7 @@
-class View extends HTMLDivElement{
+import { appendChild, removeAllChild, setElementAttribute } 
+    from "../DOM_Manipulators.js";
+
+export class View extends HTMLDivElement{
     constructor(){
         super();
         this.context = null;
@@ -15,5 +18,9 @@ class View extends HTMLDivElement{
 
     connectedCallback(){
         this.render();
+    }
+
+    defineView(alias){
+        setElementAttribute(this, {is:alias})
     }
 }

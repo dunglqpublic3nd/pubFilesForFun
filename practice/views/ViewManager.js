@@ -1,4 +1,4 @@
-class AllView extends View {
+export class ViewManager extends View {
     constructor(){
         super();
         this.content = undefined;
@@ -29,7 +29,7 @@ class AllView extends View {
     }
 
     render(){
-        setElementAttribute(this,{is:"all-view"})
+        setElementAttribute(this,{is:"view-manager"})
 
         this.content = createDiv();
         this.content.innerText = this.name;
@@ -54,4 +54,4 @@ class AllView extends View {
     }
 }
 
-customElements.define("all-view", AllView, {extends: "div"});
+customElements.define("view-manager", ViewManager, {extends: "div"});
