@@ -2,7 +2,7 @@ import { generateId } from "../../reusable/Infrastructure/UUIDGenerator.js";
 
 import { DashboardView } from "../views/DashboardView.js";
 import { EVN_Construct_View, EVN_View_OnDelivery } from "./MainController.js";
-import { Builder_Dashboard_Menu } from "../components/Builders_Dashboard.js";
+import { Builder_Dashboard_Menu } from "../components/BuildersDashBoard.js";
 
 export const VN_DASHBOARD1 = "DASHBOARD1";
 

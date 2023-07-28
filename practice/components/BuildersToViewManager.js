@@ -1,7 +1,7 @@
 import { bindClick } from "../../reusable/DOM_Manipulators.js";
 import { EVN_Display_View } from "../controllers/MainController.js";
 import { VN_ViewManager1 } from "../controllers/ViewManagerController.js";
-import { ToDashBoard_ButtonOption } from "./Builders_ToDashboard.js";
+import { ToDashBoard_ButtonOption } from "./BuildersToDashboard.js";
 
 const BTNTEXT = "View Manager"
 export class ToViewManager_ButtonOption extends ToDashBoard_ButtonOption {

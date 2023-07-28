@@ -1,6 +1,6 @@
 import { bindClick } from "../../reusable/DOM_Manipulators.js";
 import { EVN_UPDATE_CONTROLLER_HARDUPDATE } from "../controllers/UpdateController.js";
-import { ToDashBoard_ButtonOption } from "./Builders_ToDashboard.js";
+import { ToDashBoard_ButtonOption } from "./BuildersToDashboard.js";
 
 const BTNTEXT = "Force Update"
 export class DoUpdate_ButtonOption extends ToDashBoard_ButtonOption {
