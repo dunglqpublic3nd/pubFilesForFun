@@ -33,7 +33,7 @@ export class DashboardController{
             view: this._generate_DashboardView(),
             menu: new Builder_Dashboard_Menu().build(this.messageBus),
             name: "Dashboard",
-            menuName: "Menu",
+            menuName: undefined,
         })
     }
     _generate_DashboardView(){

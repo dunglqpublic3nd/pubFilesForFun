@@ -1,4 +1,6 @@
 import { SimpleList } from "../../reusable/CustomControl/List.js";
+import { generateId } from "../../reusable/Infrastructure/UUIDGenerator.js";
+import { Builder_ViewManager_Menu } from "../components/BuildersViewManager.js";
 import { EVN_Construct_View, EVN_View_OnDelivery } from "./MainController.js";
 
 export const VN_ViewManager1 = "VN_ViewManager1";
@@ -19,6 +21,9 @@ export class ViewManagerController {
 
     _setUpMessageBus() {
         this.messageBus.subscribe(EVN_Construct_View, this);
+        this.messageBus.subscribe(EVN_RetrievView, this);
+        this.messageBus.subscribe(EVN_CaptureView, this);
+        this.messageBus.subscribe(EVN_RemoveView, this);
     }
 
     _getView_VN_ViewManager1() {
@@ -27,7 +32,13 @@ export class ViewManagerController {
     }
 
     _sendView_VN_ViewManager1(view) {
-        this.messageBus.deliver(EVN_View_OnDelivery, { view })
+        this.messageBus.deliver(EVN_View_OnDelivery, {
+            view,
+            id: generateId(),
+            menu: new Builder_ViewManager_Menu().build(this.messageBus),
+            name: "View Manager",
+            menuName: "View Manager Menu",
+        })
     }
 
     _onRequestView(request) {
@@ -41,17 +52,17 @@ export class ViewManagerController {
         }
     }
 
-    _onRetrieveView(viewId){
+    _onRetrieveView(viewId) {
         this.messageBus.deliver(EVN_RetrievView_Success, {
             viewId,
             viewMeta: this.viewVault.retrieve(viewId)
         })
     }
-    _onCaptureView(viewId,viewMeta){
+    _onCaptureView(viewId, viewMeta) {
         this.viewVault.store(viewId, viewMeta)
         this.messageBus.deliver(EVN_CaptureView_Success)
     }
-    _onRemoveView(viewId){
+    _onRemoveView(viewId) {
         this.viewVault.remove(viewId)
         this.messageBus.deliver(EVN_RemoveView_Success)
     }

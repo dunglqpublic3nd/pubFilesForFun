@@ -2,11 +2,14 @@ import { appendChild, bindClick, prependChild, setElementAttribute, toggleClassN
     from "../DOM_Manipulators.js";
 import { SimpleList } from "./List.js";
 
+const Menu_Collapse_Title = "|||";
+const Menu_Expand_Title = "menu";
 export class SlidingMenu extends HTMLDivElement {
     constructor() {
         super();
         this.btnMenuName = undefined;
         this.menuBody = undefined;
+        this.isInitiated = false;
     }
 
     static get observedAttributes() {
@@ -14,33 +17,32 @@ export class SlidingMenu extends HTMLDivElement {
     }
 
     connectedCallback() {
-        setElementAttribute(this, {
-            is: "sliding-menu",
-            isexpanded: false,
-            name: "|||"
-        })
         console.log("reach connectedCallback");
-        this.btnMenuName = this.createMenu();
-        appendChild(this, this.menuBody = new SimpleList());
+        this.createMenu();
+        setTimeout(() => {
+            setElementAttribute(this, {
+                is: "sliding-menu",
+                isexpanded: this.getAttribute("isexpanded") ?? "false",
+                name: this.getAttribute("name") ?? Menu_Expand_Title
+            })
+        }, 5);
     }
 
     createMenu() {
-        let btnMenuName = this._createMenuNameButton();
-        bindClick(btnMenuName, (function () {
-            setElementAttribute(this,
-                { isexpanded: !(this.getAttribute("isexpanded") === "true") })
-        }).bind(this));
-        return btnMenuName
+        this._createMenuNameButton();
+        appendChild(this, this.menuBody = new SimpleList());
+        this.isInitiated = true;
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
         console.log("reach attributeChangedCallback", name, oldValue, newValue);
+        if (this.isInitiated)
         switch (name) {
             case "isexpanded":
                 this.toggleExpandingState(newValue);
                 break;
             case "name":
-                this.change_MenuName(newValue);
+                this._set_menuName();
                 break;
             default:
                 break;
@@ -52,32 +54,35 @@ export class SlidingMenu extends HTMLDivElement {
         if (val === "true") {
             toggleClassName(this, ["expand"], true);
             toggleClassName(this, ["collapse"], false);
-            this.change_MenuName(this.getAttribute("name"));
+            this._set_menuName();
         } else {
             toggleClassName(this, ["expand"], false);
             toggleClassName(this, ["collapse"], true);
-            this.change_MenuName("|||");
+            this._set_menuName();
 
         }
     }
 
     change_MenuName(val) {
-        this.name = val;
-        if (this.btnMenuName && (this.getAttribute("isexpanded") === "true")) {
-            this.btnMenuName.innerText = this.name;
-        } else if (this.btnMenuName) {
-            this.btnMenuName.innerText = "|||";
+        this.setAttribute("name",val??Menu_Expand_Title)
+    }
 
+    _set_menuName(){
+        if (this.getAttribute("isexpanded") === "true") {
+            this.btnMenuName.innerText = this.getAttribute("name");
+        } else  {
+            this.btnMenuName.innerText = Menu_Collapse_Title;
         }
     }
 
     _createMenuNameButton() {
-        let menuNameButton = document.createElement("div", { is: "menu-name" });
-        setElementAttribute(menuNameButton, { is: "menu-name" })
-        menuNameButton.innerText = this.getAttribute("name") ?? "|||";
-
-        prependChild(this, menuNameButton)
-        return menuNameButton
+        this.btnMenuName  = new MenuName();
+        // this.btnMenuName.innerText = this.getAttribute("name") ?? "|||";
+        prependChild(this, this.btnMenuName)
+        bindClick(this.btnMenuName, (function () {
+            setElementAttribute(this,
+                { isexpanded: !(this.getAttribute("isexpanded") === "true") })
+        }).bind(this));
     }
 }
 customElements.define("sliding-menu", SlidingMenu, { extends: "div" });
@@ -85,6 +90,9 @@ customElements.define("sliding-menu", SlidingMenu, { extends: "div" });
 class MenuName extends HTMLDivElement {
     constructor() {
         super();
+    }
+    connectedCallback(){
+        setElementAttribute(this, {is:"menu-name"})
     }
 }
 

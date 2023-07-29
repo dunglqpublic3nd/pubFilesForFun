@@ -1,3 +1,7 @@
+body{
+    margin: 15px;
+}
+
 div[is=sliding-menu].expand {
     position: fixed;
     top: 0;
@@ -10,7 +14,7 @@ div[is=sliding-menu].expand {
 
 div[is=sliding-menu].expand *  {
     width: 100%;
-    padding: 10px;
+    padding: 8px 5px;
     display: block;
     /* border-bottom: 1px solid gray; */
     text-transform: capitalize;
@@ -19,13 +23,13 @@ div[is=sliding-menu].expand *  {
 }
 
 div[is=sliding-menu].expand>div[is=menu-name] {
-    font-size: 30px;
+    font-size: 20px;
     text-align: center;
     display: block;
     text-transform: uppercase;
-    letter-spacing: 4px;
+    /* letter-spacing: 4px; */
     margin-bottom: 10px;
-    border-bottom:  3px solid gray;
+    border-bottom:  3px solid rgb(90, 29, 29);
 }
 
 div[is=sliding-menu].collapse {
@@ -37,13 +41,16 @@ div[is=sliding-menu].collapse>* {
 }
 
 div[is=sliding-menu].collapse>div[is=menu-name] {
-    transform: rotate(90deg) translate(3px, 3px);
-    font-size: 20px;
+    /* transform: rotate(90deg) translate(3px, 3px); */
+    transform: rotate(90deg);
+
+    font-size: 17px;
     padding: 5px;
     display: inline-block;
     border: 1px solid black;
-    border-radius: 5px 5px;
+    border-radius: 3px 3px;
     white-space: nowrap;
+    letter-spacing: 1px;
 
 }
 
