@@ -97,7 +97,7 @@ class ViewVault {
     }
 
     retrieve(id) {
-        this.vault.get(id);
+        return this.vault.get(id);
     }
 
     remove(id) {
