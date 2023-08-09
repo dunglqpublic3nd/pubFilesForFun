@@ -1,0 +1,104 @@
+This document describes how to implement new approach to Managing view on the go
+ 
+Actors / participants
+    MainController, FunctionControllers (ex: DashboardController, UpdateController), ViewManagerController, CommnunicationChannel, ErrorController
+    
+Roles description:
+    ViewManagerController
+        provide mechanism to manage view, viewId
+    
+    ErrorController
+        a specialized controller to display error and display all view navigation option in its menu
+            or could be a subject for future changes
+
+    FunctionControllers
+        keeps track of model to each view it generated
+        generate view, view menu
+    
+    MainController
+        provides an entry to application
+        runs application in harmony by combining ViewManagerController and other FunctionControllers.
+        provides place holder to display view content and view menu
+    
+    CommunicationChannel 
+        should also provide a mechanism to return the message has been sent. If there is no receipent to deliver the message.
+    
+Implementation detail
+    CommunicationChannel 
+        Changes
+            onMessageArrive
+                implementor should return true or false
+                    true the message is handled
+                    false the message is not handled and as subject to be returned to sender. If there is no receipent can handle the message.
+            the deliver method should include the sender as parameter incase there is no receipent can handle the message. Sender must implement must implement a new Method onMessageReturned
+                onMessageReturned(topic, message)
+    MainController
+        changes
+            draft1: 
+                request / listen to ViewsContextChange
+                answer to Start (self call) or Show View
+                    request ViewsContext
+                Show view without id
+                    request view creating 
+                    request view menu items
+                    SHOWING error view if any error is generated
+                Show view with id
+                    retrieving generated view
+                    inform FunctionController
+                        in case of updating view, replace it with a new one
+                    requesting view menu items.
+                    SHOWING error view if any error is generated
+                Showing error view
+                synthesizing View Menu Item
+                    The controller should provide a mechanism to declare View Menus instruction
+                        pseudo implementation:
+                            {
+                                ViewManager: {
+                                    Name: 
+                                    DefaultView:
+                                    AllowLinkToOtherFunctions: false,
+                                    IsInfrastructure: true,
+                                    RequireInfrastructure: true,
+                                },
+                                Dashboard{
+                                    defaultView: true,
+                                    allowLinkToOtherFunctions: true,
+                                    IsInfrastructure: true,
+                                    RequireInfrastructure: true,
+                                },
+                                Setting{
+                                    AllowLinkToOtherFunction: false,
+                                    IsInfrastructure: true,
+                                    RequireInfrastructure: true,
+                                },
+                                CreatePractice{
+                                    AllowLinkToOtherFucntions: true,
+                                    IsInfrastructure: true,
+                                    RequireInfrastructure: true,
+                                },
+                                PracticeTypes{
+                                    AllowLinkToOtherFunctions: fasle,
+                                    IsInfrastructure: false,
+                                    RequireInfrastructure: false,
+                                },
+                                Composer{
+                                    AllowLinkToOtherFunctions: true,
+                                    IsInfrastructure: true,
+                                    RequireInfrastructure: true,
+                                },
+                                KanjiCollector{
+                                    AllowLinkToOtherFunctions: true,
+                                    IsInfrastructure: true,
+                                    RequireInfrastructure: true,
+                                }
+                            }
+
+                    
+    FunctionControllers
+        provide mechanism to creates view.
+        provide mechanism to generate menu.
+        provide mechanism to discuss model.
+        provide a view id that identifies view 
+
+
+

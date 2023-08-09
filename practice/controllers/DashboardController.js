@@ -1,10 +1,23 @@
 import { generateId } from "../../reusable/Infrastructure/UUIDGenerator.js";
+import { EVN_Construct_View } from "../components/const.js";
 
 import { DashboardView } from "../views/DashboardView.js";
-import { EVN_Construct_View, EVN_View_OnDelivery } from "./MainController.js";
-import { Builder_Dashboard_Menu } from "../components/BuildersDashBoard.js";
+import {  EVN_View_OnDelivery, createViewEntry, declareViewInstruction } from "./MainController.js";
+// import { Builder_Dashboard_Menu } from "../components/BuildersDashBoard.js";
 
-export const VN_DASHBOARD1 = "DASHBOARD1";
+export const VIEW_TYPE = "DASHBOARD";
+
+export const EVN_Construct_View_DASHBOARD = EVN_Construct_View + "_" + VIEW_TYPE;
+export const MenuTitle = "Dashboard"
+export const DASHBOARD_MENU_META = declareViewInstruction(
+    VIEW_TYPE,
+    true,
+    true,
+    true,
+    true,
+    MenuTitle
+)
+
 
 export class DashboardController{
     constructor(msgBus){
@@ -13,12 +26,12 @@ export class DashboardController{
     }
 
     _setUpMessageBus(){
-        this.messageBus.subscribe(EVN_Construct_View,this)
+        this.messageBus.subscribe(EVN_Construct_View_DASHBOARD,this)
     }
 
     onMessageArrive(topic, msg){
         switch (topic) {
-            case EVN_Construct_View:
+            case EVN_Construct_View_DASHBOARD:
                 this._raise_View_Generated();
                 break;
         
@@ -28,15 +41,17 @@ export class DashboardController{
     }
 
     _raise_View_Generated(){
-        this.messageBus.deliver(EVN_View_OnDelivery, {
-            id: generateId(),
-            view: this._generate_DashboardView(),
-            menu: new Builder_Dashboard_Menu().build(this.messageBus),
-            name: "Dashboard",
-            menuName: undefined,
-        })
+        let message = createViewEntry(
+            VIEW_TYPE,
+            generateId(),
+            this._generate_DashboardView(),
+            MenuTitle,
+            MenuTitle,
+        );
+        this.messageBus.deliver(EVN_View_OnDelivery, message)
     }
     _generate_DashboardView(){
         return new DashboardView();
     }
 }
+

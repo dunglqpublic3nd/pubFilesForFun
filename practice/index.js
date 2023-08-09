@@ -2,13 +2,14 @@ import { appendChild, bindClick, createButton }
     from "../reusable/DOM_Manipulators.js";
 import { CommunicationChannel }
     from "../reusable/Infrastructure/CommnunicationChannel.js";
-import { EVN_UPDATE_CONTROLLER_HARDUPDATE, UpdateController }
-    from "./controllers/UpdateController.js"
-import { DashboardController, VN_DASHBOARD1 }
-    from "./controllers/DashboardController.js";
-import { EVN_Display_View, MainController }
+import {  EVN_Display_View, MainController }
     from "./controllers/MainController.js";
-import { ViewManagerController } from "./controllers/ViewManagerController.js";
+import { EVN_UPDATE_CONTROLLER_HARDUPDATE, UPDATE_MENU_META, UpdateController }
+    from "./controllers/UpdateController.js"
+import { DASHBOARD_MENU_META, DashboardController, VIEW_TYPE }
+    from "./controllers/DashboardController.js";
+import { VIEW_MANAGER_META, ViewManagerController } from "./controllers/ViewManagerController.js";
+import { ERROR_MENU_META } from "./controllers/ErrorController.js";
 
 // btnView.addEventListener("click", function () {
 //     // alert("do something")
@@ -17,11 +18,10 @@ import { ViewManagerController } from "./controllers/ViewManagerController.js";
 //     btnView.dispatchEvent(new CustomEvent("eventX", { msg: "hello" }));
 // }, false);
 
-
 const MainMessageBus = new CommunicationChannel("MainFunctionChannel");
+const $MainController = new MainController(MainMessageBus);
 const $WelcomeController = new DashboardController(MainMessageBus);
 const $UpdateController = new UpdateController(MainMessageBus);
-const $MainController = new MainController(MainMessageBus);
 const $ViewManagerControler = new ViewManagerController(MainMessageBus);
 
 function raiseUpdateSoftwareEvent() {
@@ -29,8 +29,14 @@ function raiseUpdateSoftwareEvent() {
 }
 
 function test() {
-    $MainController.render();
-    MainMessageBus.deliver(EVN_Display_View, { viewName: VN_DASHBOARD1 })
+    $MainController.declareEntryFunctions([
+        ERROR_MENU_META,
+        DASHBOARD_MENU_META,
+        VIEW_MANAGER_META,
+        UPDATE_MENU_META,
+    ])
+    $MainController.start();
+    // MainMessageBus.deliver(EVN_Display_View, { viewName: VN_DASHBOARD1 })
 }
 
 

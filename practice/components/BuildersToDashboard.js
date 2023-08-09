@@ -1,6 +1,6 @@
 import { CommandButton } from "../../reusable/CustomControl/CommandButton.js";
 import { bindClick } from "../../reusable/DOM_Manipulators.js";
-import { VN_DASHBOARD1 } from "../controllers/DashboardController.js";
+import { VIEW_TYPE } from "../controllers/DashboardController.js";
 import { EVN_Display_View } from "../controllers/MainController.js";
 
 const BTNTEXT = "Dashboard"
@@ -15,7 +15,7 @@ export class ToDashBoard_ButtonOption {
     }
     withViewEventBus_doClick(ViewEventBus) {
         bindClick(this.btn, () => {
-            ViewEventBus.deliver(EVN_Display_View, { viewnName: VN_DASHBOARD1 })
+            ViewEventBus.deliver(EVN_Display_View, { viewnName: VIEW_TYPE })
         })
         return this;
     }

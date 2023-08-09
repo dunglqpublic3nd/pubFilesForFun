@@ -7,6 +7,7 @@ export class MainView extends View{
         super();
         this._menu = undefined;
         this._view = createDiv();
+        this._view.innerHTML = "<h1> MAIN VIEW </h1>";
     }
 
     render(){
