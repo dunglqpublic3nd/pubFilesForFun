@@ -92,6 +92,41 @@ Implementation detail
                                     RequireInfrastructure: true,
                                 }
                             }
+                            After implementation a view menu item role setting object specification has been changed
+                                {
+                                    ViewType,
+                                    DefaultView,
+                                    AllowLinkToOtherFunctions,
+                                    IsInfrastructure,
+                                    RequireInfrastructure,
+                                    LinkText,
+                                    AlternateEvent,
+                                    AlternateData,
+                                    HasSpecialMenuItems,
+                                }
+                                This could be subject for further modification
+                                Draft1
+                                    {
+                                        ViewType, 
+                                        DefaultView,
+                                        AllowLinkToOtherFunctions, // this option would allows menu items of other entries and other functions being included when the view is displayed
+                                        IsSingletonFunction, // IsMultiInstanceFunction if false
+                                        IsEntryFunction
+                                        RequireEntryFunctions // This option override the AllowLinkToOtherFucntions but only shows Entry Function Menu Items
+                                        LinkText,
+                                        AlternateEvent,
+                                        AlternateData,
+                                        HasSpecialMenuItems,
+                                    }
+                                    At runtime LinkText (default link text) could be changed to the name which is given by user.
+
+                            Also ManagerController use a ViewMenuBuilder object class with provided context variables to.
+                                ViewMenuBuilder
+                                    build a list of menu item custom html object
+                                Each menu item uses a data attribute to do their designed function. 
+                                    ex:
+                                        trigger a function
+                                        enter a function's view.
 
                     
     FunctionControllers
