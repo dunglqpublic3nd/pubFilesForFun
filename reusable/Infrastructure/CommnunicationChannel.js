@@ -1,9 +1,20 @@
 import { toArray } from "../DOM_Manipulators.js";
+let ID = 1;
+
+// for debug
+document.MessageBusses = [];
 
 export class CommunicationChannel {
     constructor(name) {
-        this.channelName = name;
+        this.channelName = name ?? `NO NAME ${ID++}`;
         this.topics = new Map();
+        document.MessageBusses.push(this);
+    }
+
+    subscribe_multi(topics, entity){
+        topics.forEach(topic => {
+            this.subscribe(topic,entity);
+        });
     }
 
     subscribe(topic, entity) {
@@ -23,6 +34,13 @@ export class CommunicationChannel {
             receivers.delete(entity)
         }
     }
+
+    unsubscribe_multi(topics, entity){
+        topics.forEach(topic => {
+            this.unsubscribe(topic,entity);
+        });
+    }
+    
 
     removeTopic(topic) {
         this.topics.delete(topic)
@@ -51,6 +69,10 @@ export class CommunicationChannel {
 
     hasTopic(topic) {
         return this.topics.has(topic);
+    }
+
+    getName(){
+        return `Channel ${this.channelName}`;
     }
 }
 

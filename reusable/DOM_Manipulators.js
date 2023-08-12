@@ -62,20 +62,20 @@ function isCheckBox_HTMLInputElement(obj) {
     return obj.getAttribute("type") === "checkbox";
 }
 
-function printError(message, ...param) {
+function printError(message, param) {
     console.log(message, ...param);
 }
 
 function printInvalidHTMLElement(param) {
-    printError("Invalid argument, element is not an HTMLElement", ...param);
+    printError("Invalid argument, element is not an HTMLElement", arguments);
 }
 
 function printInvalidTextInput(param) {
-    printError("Invalid argument, obj is not a text HTMLInputElement", ...param);
+    printError("Invalid argument, obj is not a text HTMLInputElement", arguments);
 }
 
 function printInvalidCheckBox(param) {
-    printError("Invalid argument, obj is not a checkbox HTMLInputElement", ...param);
+    printError("Invalid argument, obj is not a checkbox HTMLInputElement", arguments);
 }
 
 export function removeAllChild(element) {

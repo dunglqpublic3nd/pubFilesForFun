@@ -1,8 +1,10 @@
 import { SimpleList } from "../../reusable/CustomControl/List.js";
 import { toArray } from "../../reusable/DOM_Manipulators.js";
+import { CommunicationChannel } from "../../reusable/Infrastructure/CommnunicationChannel.js";
 import { generateId } from "../../reusable/Infrastructure/UUIDGenerator.js";
 import { EVN_Construct_View } from "../components/const.js";
-import {  EVN_View_OnDelivery, createViewEntry, declareViewInstruction } from "./MainController.js";
+import { EVN_GET_VIEWS_CONTEXT, ViewManagerView } from "../views/ViewManagerView.js";
+import { EVN_View_OnDelivery, createViewEntry, declareViewInstruction } from "./MainController.js";
 
 export const VN_ViewManager1 = "VN_ViewManager1";
 export const EVN_RetrievView = "EVN_RetrievView";   // in
@@ -19,9 +21,9 @@ export const EVN_VIEWCONTEXT_CHANGE = "EVN_VIEWCONTEXT_CHANGE";     // out
 
 
 
-export const EVN_Construct_View_VN_ViewManager1= EVN_Construct_View + "_" + VN_ViewManager1;
+export const EVN_Construct_View_VN_ViewManager1 = EVN_Construct_View + "_" + VN_ViewManager1;
 const MenuTitle = "View Manager";
-const MenuName =  MenuTitle + " Menu";
+const MenuName = MenuTitle + " Menu";
 
 export const VIEW_MANAGER_META = declareViewInstruction(
     VN_ViewManager1,
@@ -40,8 +42,31 @@ export const VIEW_MANAGER_META = declareViewInstruction(
 export class ViewManagerController {
     constructor(ViewsMessageBus) {
         this.messageBus = ViewsMessageBus;
+        this.privateMessageHandler = undefined;
+        this.viewsControllerBus = this._setupPrivate_MsgBus();
         this._setUpMessageBus();
+
         this.viewVault = new ViewVault;
+    }
+
+    _setupPrivate_MsgBus() {
+        let msgBus = new CommunicationChannel("Internal View Manager MsgBus");
+        let pollingEvents = [EVN_GET_VIEWS_CONTEXT];
+
+        let eventHandlerMapper = {};
+        eventHandlerMapper[EVN_GET_VIEWS_CONTEXT]= 
+            {handler: this._private_onEvnGetViewsContext.bind(this)};
+
+        this.privateMessageHandler = new PrivateViewMessageHandler(eventHandlerMapper);
+        msgBus.subscribe_multi(pollingEvents, this.privateMessageHandler);
+        return msgBus;
+    }
+
+    _private_onEvnGetViewsContext() {
+        this.viewsControllerBus.deliver(EVN_VIEWCONTEXT_CHANGE,
+            {
+                views: getViewList(this.viewVault)
+            });
     }
 
     _setUpMessageBus() {
@@ -53,13 +78,12 @@ export class ViewManagerController {
         this.messageBus.subscribe(EVN_VIEWCONTEXT_RETRIEVE, this);
     }
 
-    _raiseViewContextChange(){
-        this.messageBus.deliver(EVN_VIEWCONTEXT_CHANGE, {views: this.viewVault.list()} ,this)
+    _raiseViewContextChange() {
+        this.messageBus.deliver(EVN_VIEWCONTEXT_CHANGE, { views: this.viewVault.list() }, this)
     }
 
     _getView_VN_ViewManager1() {
-        const list = new SimpleList();
-        return list;
+        return  new ViewManagerView(this.viewsControllerBus);
     }
 
     _sendView_VN_ViewManager1(view) {
@@ -95,8 +119,8 @@ export class ViewManagerController {
         // this.messageBus.deliver(EVN_RemoveView_Success)
         this._raiseViewContextChange();
     }
-    _onViewContextRetrieve(){
-        this.messageBus.deliver(EVN_VIEWCONTEXT_SUCCESS, {views: this.viewVault.list()})
+    _onViewContextRetrieve() {
+        this.messageBus.deliver(EVN_VIEWCONTEXT_SUCCESS, { views: this.viewVault.list() })
     }
 
     onMessageArrive(topic, message) {
@@ -104,7 +128,7 @@ export class ViewManagerController {
             case EVN_Construct_View_VN_ViewManager1:
                 this._onRequestView(message)
                 break;
-            
+
             case EVN_RetrievView:
                 this._onRetrieveView(message.viewId)
                 break;
@@ -125,14 +149,14 @@ export class ViewManagerController {
     }
 }
 
-function getViewLIst(viewVault){ // TODO gonna use this function  for ViewList
-    return Array.from(this.vault.entries()).map(entry => {
+function getViewList(viewVault) { // TODO gonna use this function  for ViewList
+    return Array.from(viewVault.list()).map(entry => {
         return {
-            id: entry[0],
-            name: entry[1].name,
-            type: entry[1].type,
+            id: entry.id,
+            name: entry.name,
+            type: entry.ViewType,
         }
-    }) 
+    })
 }
 
 /*
@@ -183,7 +207,29 @@ class ViewVault {
 }
 
 class ViewListAdapter { // ROLE: bridges ViewManagerController functions with ViewList.
-    constructor(controller, viewList){
+    constructor(controller, viewList) {
 
+    }
+}
+
+class PrivateViewMessageHandler {
+    constructor(topicHanlderMapper) {
+        this.topicHanlderMapper = topicHanlderMapper;
+    }
+    onMessageArrive(topic, msg) {
+        if (topic in this.topicHanlderMapper) {
+            let handler = this.topicHanlderMapper[topic].handler;
+            handler(msg);
+            return true;
+        }
+        return false;
+    }
+    onMessageReturned(topic, msg) {
+        if (topic in this.topicHanlderMapper) {
+            let returnedHandler = this.topicHanlderMapper[topic].returnedHandler;
+            returnedHandler(msg);
+            return;
+        }
+        console.error("Error unhandle returned topic", topic, msg)
     }
 }
