@@ -18,7 +18,7 @@ export class MainView extends View{
 
     updateMenu(menuName, menuElements){
         this._menu.change_MenuName(menuName);
-        this._menu.menuBody.syncItems(menuElements);
+        this._menu.syncItems(menuElements);
     }
 
     updateViewContent(viewContent){

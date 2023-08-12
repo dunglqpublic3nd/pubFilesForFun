@@ -11,8 +11,12 @@ export const UPDATE_MENU_META = declareViewInstruction(
     true,
     true,
     true,
+    false,
     UPDATE_TITLE,
     EVN_UPDATE_CONTROLLER_HARDUPDATE,
+    null,
+    false,
+    true,
 )
 
 export class UpdateController {

@@ -7,8 +7,13 @@ export const ERROR_MENU_META = declareViewInstruction(
     VIEW_TYPE,
     false,
     true,
+    true,
     false,
-    true
+    true,
+    null,
+    null,
+    null,
+    false
 );
 export class ErrorController{
     constructor(msgBus){

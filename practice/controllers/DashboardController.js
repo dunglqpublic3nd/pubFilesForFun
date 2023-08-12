@@ -15,7 +15,12 @@ export const DASHBOARD_MENU_META = declareViewInstruction(
     true,
     true,
     true,
-    MenuTitle
+    true,
+    MenuTitle,
+    null,
+    null,
+    false,
+    true
 )
 
 

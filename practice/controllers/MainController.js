@@ -1,4 +1,5 @@
 import { appendChild } from "../../reusable/DOM_Manipulators.js";
+import { MenuBuilder } from "../components/MenuBuilder.js";
 import { EVN_Construct_View } from "../components/const.js";
 import { MainView } from "../views/MainView.js";
 import { EVN_CaptureView, EVN_RetrievView, EVN_RetrievView_Success, EVN_VIEWCONTEXT_CHANGE, EVN_VIEWCONTEXT_RETRIEVE, EVN_VIEWCONTEXT_SUCCESS } from "./ViewManagerController.js";
@@ -31,6 +32,7 @@ export class MainController {
         this.messageBus.subscribe(EVN_View_OnDelivery, this)
         this.messageBus.subscribe(EVN_VIEWCONTEXT_SUCCESS, this)
         this.messageBus.subscribe(EVN_VIEWCONTEXT_CHANGE, this)
+        this.messageBus.subscribe(EVN_RetrievView_Success, this)
     }
 
     onMessageArrive(topic, message) {
@@ -50,7 +52,7 @@ export class MainController {
                 break;
             case EVN_RetrievView_Success:
                 this._onEVN_RetrievView_Success(message);
-            
+
 
             default:
                 break;
@@ -59,7 +61,7 @@ export class MainController {
 
     _onEVN_Display_view(msg) {
         this._setViewRenderContext(msg.ViewId, msg.ViewType);
-
+        this._raise_VIEWCONTEXT_RETRIEVE();
     }
 
     _onEVN_View_OnDelivery(msg) {
@@ -68,53 +70,53 @@ export class MainController {
         this._handle_views_special_menu_items();
     }
 
-    _onEVN_RetrievView_Success(msg){
+    _onEVN_RetrievView_Success(msg) {
         this._updateViewRenderContextMeta(msg.viewMeta)
         this._handle_views_special_menu_items();
     }
 
-    _onEVN_VIEWCONTEXT_CHANGE(msg){
+    _onEVN_VIEWCONTEXT_CHANGE(msg) {
         this._setViewsContext(msg.views)
     }
 
     _onEVN_VIEWCONTEXT_SUCCESS(msg) {
-        if(this._viewRenderContext._id){
+        if (this._viewRenderContext._id) {
             this._raise_EVN_RetrievView(this._viewRenderContext._id)
         } else {
             this._raise_constructView(this._viewRenderContext._type)
         }
     }
 
-    _onEVN_RETRIEVING_SPECIAL_MENU_ITEMS_SUCCESS(msg){
+    _onEVN_RETRIEVING_SPECIAL_MENU_ITEMS_SUCCESS(msg) {
         this._viewRenderContext.specialItems = msg.menuItems;
         this._displayView();
     }
 
-    _handle_views_special_menu_items(){
-        let renderingViewMetaData = getViewMeta(this._functionsMeta, this._viewRenderContext.type);
-        if (!renderingViewMetaData || !renderingViewMetaData.HasSpecialMenuItems ){
+    _handle_views_special_menu_items() {
+        let renderingViewMetaData = getViewMeta(this._functionsMeta, this._viewRenderContext.ViewType);
+        if (!renderingViewMetaData || !renderingViewMetaData.HasSpecialMenuItems) {
             this._displayView();
         } else {
             this._raise_EVN_RETRIEVING_SPECIAL_MENU_ITEMS()
         }
     }
 
-    _raise_EVN_RETRIEVING_SPECIAL_MENU_ITEMS(){
-        this.messageBus.deliver(EVN_RETRIEVING_SPECIAL_MENU_ITEMS + "_" + this._viewRenderContext.type, {
+    _raise_EVN_RETRIEVING_SPECIAL_MENU_ITEMS() {
+        this.messageBus.deliver(EVN_RETRIEVING_SPECIAL_MENU_ITEMS + "_" + this._viewRenderContext.ViewType, {
             id: this._viewRenderContext.id
         })
     }
 
-    _raise_EVN_CaptureView(msg){
-        this.messageBus.deliver(EVN_CaptureView,{viewId: msg.id, viewMeta:msg},this);
+    _raise_EVN_CaptureView(msg) {
+        this.messageBus.deliver(EVN_CaptureView, { viewId: msg.id, viewMeta: msg }, this);
     }
 
-    _raise_EVN_RetrievView(viewId){
-        this.messageBus.deliver(EVN_RetrievView, {viewId}, this)
+    _raise_EVN_RetrievView(viewId) {
+        this.messageBus.deliver(EVN_RetrievView, { viewId }, this)
     }
 
-    _raise_VIEWCONTEXT_RETRIEVE(){
-        this.messageBus.deliver(EVN_VIEWCONTEXT_RETRIEVE,undefined, this);
+    _raise_VIEWCONTEXT_RETRIEVE() {
+        this.messageBus.deliver(EVN_VIEWCONTEXT_RETRIEVE, undefined, this);
     }
 
     _raise_constructView(viewName) {
@@ -125,10 +127,13 @@ export class MainController {
     //     this.mainView.updateViewContent(metaData.view);
     //     this.mainView.updateMenu(metaData.menuName, metaData.menu);
     // }
-    _displayView(){
+    _displayView() {
         /// TODO:
         this.mainView.updateViewContent(this._viewRenderContext.viewMeta.view);
-        this.mainView.updateMenu(this._viewRenderContext.viewMeta.menuName, []);
+        let menuBuilder = new MenuBuilder(this._viewsContext,this._viewRenderContext, this._functionsMeta, this.messageBus);
+        let menuName = menuBuilder.getMenuName();
+        let items = menuBuilder.buildMenu();
+        this.mainView.updateMenu(menuName, items);
     }
 
     _render() {
@@ -150,7 +155,7 @@ export class MainController {
         this._viewRenderContext = new ViewRenderContext(id, type);
     }
 
-    _updateViewRenderContextMeta(viewMeta){
+    _updateViewRenderContextMeta(viewMeta) {
         this._viewRenderContext.viewMeta = viewMeta
     }
 
@@ -181,29 +186,33 @@ export function declareViewInstruction(
     ViewType,
     DefaultView,
     AllowLinkToOtherFunctions,
-    IsInfrastructure,
-    RequireInfrastructure,
-    LinkText,
-    AlternateEvent,
+    IsSingletonFunction,
+    isEntryFunction,
+    RequireEntryFunctions,
+    DefaultLinkText,
+    AlternateEventName,
     AlternateData,
-    HasSpecialMenuItems,
+    HasSpecializedMenuItems,
+    CloseAfterClick,
 ) {
     return {
         ViewType,
         DefaultView,
         AllowLinkToOtherFunctions,
-        IsInfrastructure,
-        RequireInfrastructure,
-        LinkText,
-        AlternateEvent,
+        IsSingletonFunction,
+        isEntryFunction,
+        RequireEntryFunctions,
+        DefaultLinkText,
+        AlternateEventName,
         AlternateData,
-        HasSpecialMenuItems,
+        HasSpecializedMenuItems,
+        CloseAfterClick,
     }
 }
 
-export function createViewEntry(type, id, view, name, menuName) {
+export function createViewEntry(ViewType, id, view, name, menuName) {
     return {
-        ViewType: type,
+        ViewType,
         id,
         view,
         name,
@@ -225,25 +234,20 @@ class ViewRenderContext {
         return this._id;
     }
 
-    set type(_type) {
+    set ViewType(_type) {
         this._type = _type;
     }
 
-    get type() {
+    get ViewType() {
         return this._type;
     }
 
-    set viewMeta(_viewMeta){
+    set viewMeta(_viewMeta) {
         this._viewMeta = _viewMeta;
     }
 
-    get viewMeta(){
+    get viewMeta() {
         return this._viewMeta;
     }
 }
 
-class MenuBuilder {
-    constructor(viewMetas, viewRenderContext, globalMessageBus){
-
-    }
-}

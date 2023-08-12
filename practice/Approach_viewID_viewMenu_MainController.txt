@@ -116,17 +116,21 @@ Implementation detail
                                         LinkText,
                                         AlternateEvent,
                                         AlternateData,
-                                        HasSpecialMenuItems,
+                                        HasSpecializedMenuItems,
                                     }
                                     At runtime LinkText (default link text) could be changed to the name which is given by user.
 
-                            Also ManagerController use a ViewMenuBuilder object class with provided context variables to.
-                                ViewMenuBuilder
-                                    build a list of menu item custom html object
+                            Also ManagerController use a MenuBuilder object class with provided context variables to.
+                                MenuBuilder
+                                    build a list of custom html menu item object
                                 Each menu item uses a data attribute to do their designed function. 
                                     ex:
                                         trigger a function
                                         enter a function's view.
+                                
+
+
+
 
                     
     FunctionControllers
@@ -135,5 +139,60 @@ Implementation detail
         provide mechanism to discuss model.
         provide a view id that identifies view 
 
+    ViewInstruction
+        {
+            ViewType,
+            DefaultView,
+            IsSingletonFunction,
+            isEntryFunction,
+            AllowLinkToOtherFunctions, !
+            RequireEntryFunctions,  !
+            DefaultLinkText,
+            AlternateEventName,
+            AlternateData,
+            HasSpecializedMenuItems !
+        }
+    ViewRenderContext
+        {
+            id,
+            type,
+            viewMeta
+            specialItems
+        }
+    ViewMeta-ViewEntry{
+        ViewType,
+        id,
+        view, - view's html representor
+        name, - view latest name
+        menuName            
+    }
+    specialItems - view menu item collection
+    ViewsContext - collection of ViewEntry
 
+MenuBuilder Algorithm
+    input
+        messageBus
+        _viewRenderContext
+        _viewsContext
+            ViewEntry collection
+        _functionsMeta 
+            ViewInstruction collection 
+    output
+        [MenuItem]
+    MenuBuilder:
+        methods
+            getViewInstructionFrom_FunctionsMeta()
+            filterEntryFunctions() 
+            filterNormalFunctions()
 
+            buildMenu();
+        pseudo steps
+            getViewTypeFrom_ViewRejderContext()
+            getViewInstructionFrom_FunctionsMeta()
+            <>
+
+            <>
+
+New Problems:
+    Display or not display the current focused view?
+    How do you display the focused view's entry item option?

@@ -5,6 +5,7 @@ export class View extends HTMLDivElement{
     constructor(){
         super();
         this.context = null;
+        this.init = false;
     }
 
     setViewContent(htmlElement){
@@ -17,7 +18,11 @@ export class View extends HTMLDivElement{
     }
 
     connectedCallback(){
-        this.render();
+        if (!this.init){
+            this.render();
+            this.init = true;
+        }
+
     }
 
     defineView(alias){

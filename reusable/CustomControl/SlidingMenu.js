@@ -1,3 +1,4 @@
+import { MenuItem_CloseAfterClick } from "../../practice/components/MenuItem_CloseAfterClick.js";
 import { appendChild, bindClick, prependChild, setElementAttribute, toggleClassName }
     from "../DOM_Manipulators.js";
 import { SimpleList } from "./List.js";
@@ -39,7 +40,7 @@ export class SlidingMenu extends HTMLDivElement {
         if (this.isInitiated)
         switch (name) {
             case "isexpanded":
-                this.toggleExpandingState(newValue);
+                this._toggleExpandingState(newValue);
                 break;
             case "name":
                 this._set_menuName();
@@ -49,8 +50,8 @@ export class SlidingMenu extends HTMLDivElement {
         }
     }
 
-    toggleExpandingState(val) {
-        console.dir({ val })
+    _toggleExpandingState(val) {
+        // console.dir({ val })
         if (val === "true") {
             toggleClassName(this, ["expand"], true);
             toggleClassName(this, ["collapse"], false);
@@ -75,6 +76,12 @@ export class SlidingMenu extends HTMLDivElement {
         }
     }
 
+    _closeMenu(){
+        setElementAttribute(this,
+            {isexpanded: false}
+        )
+    }
+
     _createMenuNameButton() {
         this.btnMenuName  = new MenuName();
         // this.btnMenuName.innerText = this.getAttribute("name") ?? "|||";
@@ -83,6 +90,15 @@ export class SlidingMenu extends HTMLDivElement {
             setElementAttribute(this,
                 { isexpanded: !(this.getAttribute("isexpanded") === "true") })
         }).bind(this));
+    }
+
+    syncItems(menuElements){
+        menuElements.forEach(element => {
+            if(element instanceof MenuItem_CloseAfterClick){
+                bindClick(element, this._closeMenu.bind(this))
+            }
+        });
+        this.menuBody.syncItems(menuElements);
     }
 }
 customElements.define("sliding-menu", SlidingMenu, { extends: "div" });

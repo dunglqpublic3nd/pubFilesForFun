@@ -29,7 +29,12 @@ export const VIEW_MANAGER_META = declareViewInstruction(
     true,
     true,
     true,
-    MenuTitle
+    true,
+    MenuTitle,
+    null,
+    null,
+    false,
+    true,
 )
 
 export class ViewManagerController {
